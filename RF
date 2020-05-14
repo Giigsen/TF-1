@@ -1,0 +1,29 @@
+import tensorflow as tf
+import cv2
+import matplotlib.pyplot as plt
+
+# 用来正常显示中文
+plt.rcParams["font.sans-serif"] = ["SimHei"]
+
+if __name__ == "__main__":
+    img = cv2.imread("JPEGSImages/8-0.jpg")
+    h_flip_img = tf.image.random_flip_left_right(img)
+    # 将图片随机进行垂直翻转
+    v_flip_img = tf.image.random_flip_up_down(img)
+    sess = tf.InteractiveSession()
+    # 通道转换
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    h_flip_img = cv2.cvtColor(h_flip_img.eval(), cv2.COLOR_BGR2RGB)
+    v_flip_img = cv2.cvtColor(v_flip_img.eval(), cv2.COLOR_BGR2RGB)
+    # 显示图片
+    plt.figure(1)
+    plt.subplot(131)
+    plt.title("水平翻转")
+    plt.imshow(h_flip_img)
+    plt.subplot(132)
+    plt.title("垂直翻转")
+    plt.imshow(v_flip_img)
+    plt.subplot(133)
+    plt.title("原始图片")
+    plt.imshow(img)
+    plt.show()
